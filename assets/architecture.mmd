@@ -1,0 +1,64 @@
+flowchart TD
+    User([👤 User - Pet Owner])
+
+    subgraph UI["🖥️ Streamlit UI - app.py"]
+        UI_Owner[Owner Setup]
+        UI_Pet[Add Pets]
+        UI_Task[Add Tasks]
+        UI_Schedule[Generate Schedule]
+        UI_AI[AI Care Plan Button]
+    end
+
+    subgraph Logic["🧠 Core Logic - pawpal_system.py"]
+        Owner[Owner Class]
+        Pet[Pet Class]
+        Task[Task Class]
+        Scheduler["Scheduler<br/>priority sort, conflict detection,<br/>slot finder, recurring tasks"]
+    end
+
+    subgraph AI["🤖 AI Layer - ai_assistant.py"]
+        Retrieve["1. Retriever<br/>keyword scoring, top-k=3"]
+        Prompt["2. Prompt Builder<br/>injects retrieved docs"]
+        LLM["3. Groq LLM<br/>llama-3.3-70b-versatile"]
+        Confidence["4. Confidence Extractor<br/>guardrail"]
+    end
+
+    subgraph KB["📚 Knowledge Base"]
+        Docs["dog_care.md<br/>cat_care.md<br/>senior_pets.md<br/>medications.md<br/>daily_routine.md"]
+    end
+
+    subgraph Reliability["🧪 Reliability - test_ai_harness.py"]
+        Scenarios[5 Test Scenarios]
+        Checks["5 Validators per scenario:<br/>error, length, confidence,<br/>keywords, sources"]
+        Report[test_report.md]
+    end
+
+    Storage[("💾 data.json<br/>persistence")]
+
+    User --> UI
+    UI_Owner --> Owner
+    UI_Pet --> Pet
+    UI_Task --> Task
+    UI_Schedule --> Scheduler
+    Owner -.save/load.-> Storage
+
+    UI_AI -- "context: pets + tasks + time" --> Retrieve
+    Retrieve -- "queries" --> Docs
+    Docs -- "top 3 docs" --> Prompt
+    Prompt --> LLM
+    LLM -- "AI plan" --> Confidence
+    Confidence -- "response + sources + confidence" --> UI_AI
+
+    Scenarios --> Retrieve
+    LLM -. tested by .-> Checks
+    Checks --> Report
+
+    classDef ai fill:#fff4e6,stroke:#e67e22,stroke-width:2px
+    classDef logic fill:#e8f4fd,stroke:#3498db,stroke-width:2px
+    classDef kb fill:#e9f7ef,stroke:#27ae60,stroke-width:2px
+    classDef test fill:#fdebee,stroke:#e74c3c,stroke-width:2px
+
+    class Retrieve,Prompt,LLM,Confidence ai
+    class Owner,Pet,Task,Scheduler logic
+    class Docs kb
+    class Scenarios,Checks,Report test

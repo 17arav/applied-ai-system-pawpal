@@ -51,6 +51,36 @@
           "completed": false
         }
       ]
+    },
+    {
+      "name": "max",
+      "species": "Dog",
+      "age": 9,
+      "special_needs": "arthritis",
+      "tasks": [
+        {
+          "name": "Morning Walk",
+          "task_type": "walk",
+          "duration": 30,
+          "priority": 3,
+          "recurring": false,
+          "pet_name": "max",
+          "time_slot": null,
+          "due_date": "2026-04-28",
+          "completed": false
+        },
+        {
+          "name": "feed",
+          "task_type": "feeding",
+          "duration": 20,
+          "priority": 5,
+          "recurring": false,
+          "pet_name": "max",
+          "time_slot": null,
+          "due_date": "2026-04-28",
+          "completed": false
+        }
+      ]
     }
   ]
 }
