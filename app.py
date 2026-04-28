@@ -16,6 +16,17 @@ import os
 if st.session_state.owner is None and os.path.exists("data.json"):
     st.session_state.owner = Owner.load_from_json("data.json")
     st.session_state.scheduler = Scheduler(owner=st.session_state.owner)
+
+# --- Sidebar: Reset / Clear All Data ---
+with st.sidebar:
+    st.header("⚙️ Settings")
+    if st.button("🗑️ Clear All Data", type="secondary"):
+        if os.path.exists("data.json"):
+            os.remove("data.json")
+        st.session_state.owner = None
+        st.session_state.scheduler = None
+        st.success("All data cleared! Refresh the page.")
+        st.rerun()
     
 
 st.title("🐾 PawPal+")
