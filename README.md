@@ -16,7 +16,7 @@ For this final project, I added a full **AI layer** on top of the existing sched
 
 ## 🎬 Demo Video
 
-📹 **Loom walkthrough:** _Add Loom link here after recording_
+📹 **[Watch the Loom walkthrough →](https://www.loom.com/share/e1ef98cddb0145339ebf57f266d36f88)**
 
 ---
 
